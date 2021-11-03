@@ -17,9 +17,10 @@ BOT_ID = bot.api_call("auth.test")["user_id"]
 
 @app.route("/getprice",methods=["POST"])
 def get_price():
+    crypto = Crypto()
     data = request.form
     coin_name,*fiat_options = data.get("text").split()
-    coin = Crypto().get_coin(coin_name)
+    coin = crypto.get_coin(coin_name)
 
     if(not fiat_options):
         text = f"{coin['name']} : {coin['price_usd']} $"
@@ -32,14 +33,15 @@ def get_price():
 
 @app.route("/showdetail",methods=["POST"])
 def show_detail():
+    crypto = Crypto()
     data = request.form
     coin_name,*fiat_options = data.get("text").split()
-    coin = Crypto().get_coin(coin_name)
+    coin = crypto.get_coin(coin_name)
     
     if(not fiat_options):
         price = f"{coin['price_usd']} USD"
     else:
-        price = f"{Crypto().convert_currency(coin['price_usd'],fiat_options[0])} {fiat_options[0].upper()}"
+        price = f"{crypto.convert_currency(coin['price_usd'],fiat_options[0])} {fiat_options[0].upper()}"
 
     text = f"""----------------------------------------------------
                         {coin["name"]}
