@@ -25,7 +25,7 @@ def get_price():
     if(not fiat_options):
         text = f"{coin['name']} : {coin['price_usd']} $"
     else:
-        price = Crypto().convert_currency(coin['price_usd'],fiat_options[0])
+        price = crypto.convert_currency(coin['price_usd'],fiat_options[0])
         text = f"{coin['name']} : {price}"
     
     bot.chat_postMessage(channel="#crypto",text=text)
