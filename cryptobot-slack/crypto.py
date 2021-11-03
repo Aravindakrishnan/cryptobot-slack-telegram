@@ -1,4 +1,10 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 import requests
+
+ENV_PATH= Path(".") / ".env"
+load_dotenv(dotenv_path=ENV_PATH)
 
 class Crypto:
     def __init__(self):
@@ -15,7 +21,7 @@ class Crypto:
         return {}
     
     def convert_currency(self,usd_price,fiat_name):
-        query = f"USD_{fiat_name}"
+        query = f"USD_{fiat_name.upper()}"
         url = f"https://free.currconv.com/api/v7/convert?q={query}&compact=ultra&apiKey=b9e409f547a823042d5c"
         fiat_price = requests.get(url).json()[query]
-        return usd_price * fiat_price
+        return float(usd_price) * fiat_price
