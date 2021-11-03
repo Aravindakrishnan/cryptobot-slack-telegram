@@ -18,11 +18,9 @@ BOT_ID = bot.api_call("auth.test")["user_id"]
 @app.route("/getprice",methods=["POST"])
 def get_price():
     data = request.form
-    user_id = data.get("user")
-    if(user_id != BOT_ID):
-        coin = Crypto().get_coin(data.get("text"))
-        text = f"{coin['name']} : {coin['price_usd']} $"
-        bot.chat_postMessage(channel="#crypto",text=text)
+    coin = Crypto().get_coin(data.get("text"))
+    text = f"{coin['name']} : {coin['price_usd']} $"
+    bot.chat_postMessage(channel="#crypto",text=text)
     return Response(), 200
     
 if __name__ == "__main__":
