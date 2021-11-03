@@ -19,7 +19,7 @@ BOT_ID = bot.api_call("auth.test")["user_id"]
 def get_price():
     data = request.form
     coin_name,*fiat_options = data.get("text").split()
-    coin = Crypto().get_coin(data.get(coin_name))
+    coin = Crypto().get_coin(coin_name)
 
     if(not fiat_options):
         text = f"{coin['name']} : {coin['price_usd']} $"
