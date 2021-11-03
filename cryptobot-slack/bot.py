@@ -37,7 +37,7 @@ def show_detail():
     coin = Crypto().get_coin(coin_name)
     
     if(not fiat_options):
-        price = coin["price_usd"] + " USD"
+        price = f"{coin['price_usd']} USD"
     else:
         price = f"{Crypto().convert_currency(coin['price_usd'],fiat_options[0])} {fiat_options[0].upper()}"
 
