@@ -39,9 +39,10 @@ CONVERT_API_KEY=XXXXXXXXXXX
 
 * step2 : copy paste needed API_KEYS in .env file.
 
-* step3 : run bot.py python script.
+* step3 : install required libs and run bot.py python script.
 
 ```
+pip install -r requirements.txt
 python3 bot.py
 ```
 
