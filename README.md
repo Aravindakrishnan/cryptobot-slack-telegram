@@ -4,7 +4,7 @@ Cryptobot is the slackbot used for getting info about the cryptocurrencies 💰
 
 [documentation](https://cryptobotdocs.netlify.app/)
 
-# Installation
+# Step by Step Implementation [DONE ✅]:
 
 clone the repository and get into cryptobot-slack directory and .
 
