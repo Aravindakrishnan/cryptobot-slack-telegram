@@ -83,3 +83,18 @@ ngrok http [PORT]
 /showgraph btc 1y
 ```
 
+### Sample Outputs
+
+/getprice
+
+![getprice.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/getprice.png)
+
+/showdetail
+
+![showdetail.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showdetail.png)
+
+/showcandle 
+
+![showdetail01.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showcandle01.png)
+
+![showdetail02.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showcandle02.png)
