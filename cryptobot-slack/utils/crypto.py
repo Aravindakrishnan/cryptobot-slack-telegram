@@ -25,7 +25,7 @@ class Crypto:
     
     def convert_currency(self,usd_price,fiat_name):
         query = f"USD_{fiat_name.upper()}"
-        url = f"https://free.currconv.com/api/v7/convert?q={query}&compact={os.environ['CONVERT_API_KEY']}"
+        url = f"https://free.currconv.com/api/v7/convert?q={query}&compact=ultra&apiKey={os.environ['CONVERT_API_KEY']}"
         fiat_price = requests.get(url).json()[query]
         return float(usd_price) * fiat_price
 
