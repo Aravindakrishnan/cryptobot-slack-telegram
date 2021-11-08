@@ -8,8 +8,8 @@ from slackeventsapi import SlackEventAdapter
 from utils.crypto import Crypto
 import json
 # intialization
-ENV_PATH= Path(".") / ".env"
-load_dotenv(dotenv_path=ENV_PATH)
+# ENV_PATH= Path(".") / ".env"
+# load_dotenv(dotenv_path=ENV_PATH)
 
 app = Flask(__name__)
 

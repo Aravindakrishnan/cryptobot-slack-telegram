@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 from base64 import b64encode
 import utils.candle as candle 
 
-ENV_PATH= Path(".") / "../.env"
-load_dotenv(dotenv_path=ENV_PATH)
+# ENV_PATH= Path(".") / "../.env"
+# load_dotenv(dotenv_path=ENV_PATH)
 
 class Crypto:
 
