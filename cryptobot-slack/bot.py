@@ -9,6 +9,9 @@ from slackeventsapi import SlackEventAdapter
 from utils.crypto import Crypto
 from utils.chart import get_chart_id
 
+
+# intialization
+
 ENV_PATH= Path(".") / ".env"
 load_dotenv(dotenv_path=ENV_PATH)
 
@@ -26,6 +29,10 @@ def index():
 
 @app.route("/getprice",methods=["POST"])
 def get_price():
+    """
+        get_price() method return the price of the particular coin 
+        eg : [Coinname] : [Price]
+    """
     crypto = Crypto()
     data = request.form
     coin_name,*fiat_options = data.get("text").split()
@@ -42,6 +49,9 @@ def get_price():
 
 @app.route("/showdetail",methods=["POST"])
 def show_detail():
+    """
+        show_detail() method return the detail view of particular coin. 
+    """
     data = request.form
     coin_name,*fiat_options = data.get("text").split()
     crypto = Crypto()
@@ -70,6 +80,10 @@ def show_detail():
     
 @app.route("/showgraph",methods=["POST"])
 def show_graph():
+    """
+        show_graph() return the snapshot of the coin graph at particular time_frame
+        [1d,1w,1m,3m,1y,all]
+    """
     crypto = Crypto()
     data = request.form
     coin_name,*time_options = data.get("text").split()
@@ -86,7 +100,24 @@ def show_graph():
     bot.chat_postMessage(channel="#crypto",text="",attachments=[{"text":f"{coin['name']} {time_options[0]} graph 📈","image_url" : response["data"]["url"]}])
     return Response(), 200
 
+@app.route("/help",methods=["POST"])
+def show_help():
+    text = """
+        Slash Commands :
 
+        /getprice [coin_name or coin_symbol] [fiat_name] - returns default USD
+        /getprice [coin_name or coin_symbol] [fiat_name] returns based on fiat
+
+        /showdetail [coin_name or coin_symbol] [fiat_name] returns detail view of coin default : USD
+        /showdetail [coin_name or coin_symbol] [fiat_name] returns detail view of coin based on fiat
+       
+        /showgraph [coin_name or coin_symbol] - returns default : 1d graph   
+        /showgraph [coin_name or coin_symbol] [1d,1w,1m,3m,1y,ytd,all] - returns graph based on time_frame 
+    
+        doc : https://cryptobotdocs.netlify.app
+    """
+    bot.chat_postMessage(channel="#crypto",text=text)
+    return Response(),200
     
 if __name__ == "__main__":
     app.run(debug=True,port=PORT)
