@@ -1,1 +1,1 @@
-web: cryptobot-slack:app
+web: gunicorn cryptobot-slack/bot:app
