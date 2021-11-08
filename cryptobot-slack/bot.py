@@ -1,17 +1,13 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-
 from flask import Flask , Response , request
+import requests
 import slack 
 from slackeventsapi import SlackEventAdapter
-
 from utils.crypto import Crypto
-from utils.chart import get_chart_id
-
-
+import json
 # intialization
-
 ENV_PATH= Path(".") / ".env"
 load_dotenv(dotenv_path=ENV_PATH)
 
@@ -35,6 +31,8 @@ def get_price():
     """
     crypto = Crypto()
     data = request.form
+    channel_id = data.get('channel_id')
+    data = request.form
     coin_name,*fiat_options = data.get("text").split()
     coin = crypto.get_coin(coin_name)
 
@@ -43,8 +41,7 @@ def get_price():
     else:
         price = crypto.convert_currency(coin['price_usd'],fiat_options[0])
         text = f"{coin['name']} : {price}"
-
-    bot.chat_postMessage(channel="#crypto",text=text)
+    bot.chat_postMessage(channel=channel_id,text=text)
     return Response(), 200
 
 @app.route("/showdetail",methods=["POST"])
@@ -53,6 +50,7 @@ def show_detail():
         show_detail() method return the detail view of particular coin. 
     """
     data = request.form
+    channel_id = data.get('channel_id')
     coin_name,*fiat_options = data.get("text").split()
     crypto = Crypto()
     coin = crypto.get_coin(coin_name)
@@ -75,33 +73,32 @@ def show_detail():
         market_cap : {coin["market_cap_usd"]}
 -----------------------------------------------------
     """
-    bot.chat_postMessage(channel="#crypto",text=text)
+    bot.chat_postMessage(channel=channel_id,text=text)
     return Response(), 200
-    
-@app.route("/showgraph",methods=["POST"])
-def show_graph():
+
+@app.route("/showcandle",methods=["POST"])
+def show_candle():
     """
-        show_graph() return the snapshot of the coin graph at particular time_frame
-        [1d,1w,1m,3m,1y,all]
+        show_candle() return the snapshot of the coin graph at particular time_frame
+        [1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M]
     """
     crypto = Crypto()
     data = request.form
+    channel_id = data.get('channel_id')
     coin_name,*time_options = data.get("text").split()
     coin = crypto.get_coin(coin_name)   
 
     if(not time_options):
         time_options = ["1d"] #default
 
-    
-    if(not get_chart_id(time_options[0])):
-        bot.chat_postMessage(channel="#crypto",text="Kindly check the input please!")
-        return Response(),400
-    response = crypto.take_snapshot(coin["nameid"],time_options[0])
-    bot.chat_postMessage(channel="#crypto",text="",attachments=[{"text":f"{coin['name']} {time_options[0]} graph 📈","image_url" : response["data"]["url"]}])
+    response = crypto.get_candles(coin["symbol"],time_options[0])
+    bot.chat_postMessage(channel=channel_id,text="",attachments=[{"text":f"{coin['name']} {time_options[0]} graph 📈","image_url" : response["data"]["url"]}])
     return Response(), 200
 
 @app.route("/help",methods=["POST"])
 def show_help():
+    data = request.form
+    channel_id = data.get('channel_id')
     text = """
         Slash Commands :
 
@@ -111,13 +108,14 @@ def show_help():
         /showdetail [coin_name or coin_symbol] [fiat_name] returns detail view of coin default : USD
         /showdetail [coin_name or coin_symbol] [fiat_name] returns detail view of coin based on fiat
        
-        /showgraph [coin_name or coin_symbol] - returns default : 1d graph   
-        /showgraph [coin_name or coin_symbol] [1d,1w,1m,3m,1y,ytd,all] - returns graph based on time_frame 
+        /showcandle [coin_name or coin_symbol] - returns default : 1d graph   
+        /showcandle [coin_name or coin_symbol] [1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M] - returns graph based on time_frame 
     
         doc : https://cryptobotdocs.netlify.app
     """
-    bot.chat_postMessage(channel="#crypto",text=text)
+    bot.chat_postMessage(channel=channel_id,text=text)
     return Response(),200
+
     
 if __name__ == "__main__":
     app.run(debug=True,port=PORT)
