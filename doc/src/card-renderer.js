@@ -32,7 +32,7 @@ const commands = [
     {
         id : 6,
         name : "/showcandle",
-        option : "[coin_name or coin_symbol] [1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M]",
+        option : "[coin_name or coin_symbol] [1m,3m,5m,15m,30m,1h,2h,\n4h,6h,8h,12h,1d,3d,1w,1M]",
         desc : " return the candle graph snapshot of the particular coin's specific timeframe"
     }
 
