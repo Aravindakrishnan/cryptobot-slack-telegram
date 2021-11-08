@@ -63,6 +63,18 @@ p {
     border-radius: 0.6rem;
     position: relative;
     box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+}
+.notify__img_container{
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+.notify__img{
+    width: 100%;
+    margin: auto;
+    border-radius: 50%;
 }
 .notify__title {
     color: var(--headline-color);
@@ -88,6 +100,7 @@ p {
 .main-container {
     margin: 0.5rem;
     padding: 1.6rem;
+    position: relative;
 }
 
 .main__title {
@@ -162,5 +175,11 @@ p {
     }
     .usage__content {
         margin: 0.8rem 0.2rem;
+    }
+    .notification-container {
+        flex-direction: column;
+        flex-flow: wrap;
+        justify-content: center;
+        align-items: center;
     }
 }
