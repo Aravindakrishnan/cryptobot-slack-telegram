@@ -32,7 +32,6 @@ def get_price():
     crypto = Crypto()
     data = request.form
     channel_id = data.get('channel_id')
-    data = request.form
     coin_name,*fiat_options = data.get("text").split()
     coin = crypto.get_coin(coin_name)
 
