@@ -1,9 +1,9 @@
 import os
+import requests
 from pathlib import Path
 from dotenv import load_dotenv
-import requests
-from utils.snapshot import snapshot_chart
 from base64 import b64encode
+import utils.candle as candle 
 
 ENV_PATH= Path(".") / "../.env"
 load_dotenv(dotenv_path=ENV_PATH)
@@ -29,19 +29,21 @@ class Crypto:
         fiat_price = requests.get(url).json()[query]
         return float(usd_price) * fiat_price
 
-    def take_snapshot(self,coinname,chart_time):
+    def get_candles(self,coinname,chart_interval):
         try:
-            snapshot_chart(coinname,chart_time)    
-            return self.host_snapshot("./static/charts/chart.png")
+            symbol = coinname.upper()
+            candle.save_chart(symbol=symbol,interval=chart_interval)
+            return self.host_snapshot("chart.png")
         except Exception as e:
             return e
     
-    def host_snapshot(self,image_path):
+    def host_snapshot(self,path):
         imgbb_url = 'https://api.imgbb.com/1/upload'
+        abs_path = os.path.abspath(path)
         response = requests.post(imgbb_url, 
         data = {
             'key': os.environ["IMGBB_API_KEY"], 
-            'image':b64encode(open(image_path, 'rb').read()),
+            'image':b64encode(open(abs_path, 'rb').read()),
             'name': 'chart.png',
         }
         )
