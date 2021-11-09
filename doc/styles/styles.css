@@ -113,7 +113,13 @@ p {
     transition: 0.1s;
 }
 
-.join__card:hover , .join__card:active{
+.join__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.join__card:hover {
     border-bottom: 0.2rem solid var(--special-color);
 }
 
@@ -201,6 +207,16 @@ p {
 .example__subtitle {
     color: var(--subtitle-color);
     margin: 1.2rem 0;
+}
+
+/* ion-icon */
+
+ion-icon {
+    display: inline-block;
+    margin-left: 0.8rem;
+}
+.telegram-icon {
+    transform: rotate(-45deg);
 }
 
 
