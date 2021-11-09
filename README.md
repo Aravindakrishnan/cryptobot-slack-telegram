@@ -1,6 +1,6 @@
 # cryptobot-slack-telegram
 
-Cryptobot is the slackbot used for getting info about the cryptocurrencies 💰
+Cryptobot is here to help you with getting info about the cryptocurrencies 💰
 
 [documentation](https://cryptobotdocs.netlify.app/)
 
