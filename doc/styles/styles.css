@@ -13,6 +13,7 @@
     --headline-color : #fffffe;
     --subtitle-color : #94a1b2;
     --paragraph-color : #94a1b2;
+    --special-color : #7f5af0;
 }
 
 html 
@@ -57,8 +58,8 @@ p {
 /* notfication component */
 
 .notification-container {
-    padding: 1.6rem;
     background: var(--background);
+    padding: 1.6rem;
     margin: 1rem;
     border-radius: 0.6rem;
     position: relative;
@@ -93,6 +94,42 @@ p {
     transform: translate(-1.2rem,1.2rem);
     color: var(--headline-color);
     cursor: pointer;
+}
+
+/* join-container */
+.join-container{
+    padding: 1.6rem;
+}
+.join__card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+    margin: 1.2em 0;
+    background: var(--background);
+    color: var(--headline-color);
+    border-radius: 0.6rem;
+    border-bottom: 0.2rem solid var(--subtitle-color);
+    transition: 0.1s;
+}
+
+.join__card:hover , .join__card:active{
+    border-bottom: 0.2rem solid var(--special-color);
+}
+
+.join__link {
+    display: inline-block;
+    font-size: 1.8em;
+    text-decoration: none;
+    background: var(--container-background);
+    padding: 1.2rem;
+    border-radius: 0.6rem;
+    color: var(--paragraph-color);
+    transition: 0.1s transform;
+}
+
+.join__link:active{
+    transform: scale(0.9);
 }
 
 /* main-container */
@@ -131,7 +168,7 @@ p {
 
 .usage__command {
     display: inline-block;
-    background:#7f5af0;
+    background:var(--special-color);
     font-size: 1.6rem;
     padding: 0.4rem;
     border-radius: 0.4rem;
@@ -181,5 +218,14 @@ p {
         flex-flow: wrap;
         justify-content: center;
         align-items: center;
+    }
+    .join__card{
+        flex-direction: column;
+    }
+    .join__link {
+        display: block;
+        margin: 1.2rem 0;
+        width: 80%;
+        text-align: center;
     }
 }
