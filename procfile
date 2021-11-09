@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT cryptobot:app
+web: gunicorn --chdir cryptobot-slack -b :$PORT bot:app
