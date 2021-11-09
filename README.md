@@ -1,5 +1,7 @@
 # cryptobot-slack-telegram
 
+![logo_.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/icon/logo_.png)
+
 Cryptobot is the slackbot used for getting info about the cryptocurrencies 💰
 
 [documentation](https://cryptobotdocs.netlify.app/)
