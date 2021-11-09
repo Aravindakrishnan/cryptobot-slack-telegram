@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import mplfinance as mpf
+from datetime import datetime , date
 
 def save_chart(symbol,interval="1d"):
     """
@@ -30,7 +31,9 @@ def save_chart(symbol,interval="1d"):
         'Low' : low_c,
         'Close' : close_c
     }
-
+    current_time = datetime.now().time()
+    current_date = date.today().strftime("%d/%m/%Y")
+    title = f"{symbol}|{current_date}|{current_time}"
     dataframe = pd.DataFrame(raw_data).set_index("Date")
-    mpf.plot(dataframe,type="candle",style="yahoo",title=symbol,ylabel="Price in USDT",savefig="chart.png")    
+    mpf.plot(dataframe,type="candle",style="yahoo",title=title,ylabel="Price in USDT",savefig="chart.png")    
     return dataframe
