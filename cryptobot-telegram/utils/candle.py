@@ -3,6 +3,10 @@ import pandas as pd
 import mplfinance as mpf
 
 def save_chart(symbol,interval="1d"):
+    """
+        save_chart() method saves the candlechart image for the specified coin 
+        and also returns the dataframe for the specified coin.
+    """
     url = f"https://api.binance.com/api/v1/klines?symbol={symbol}USDT&interval={interval}&limit=100"
     candles = requests.get(url).json()
 
