@@ -21,7 +21,8 @@ class Crypto:
         for coin in self.coins["data"]:
             if coin["nameid"] == coin_name.lower() or coin["symbol"].lower() == coin_name.lower():
                 return coin
-    
+        return {}
+        
     def convert_currency(self,usd_price,fiat_name):
         query = f"USD_{fiat_name.upper()}"
         url = f"https://free.currconv.com/api/v7/convert?q={query}&compact=ultra&apiKey={os.environ['CONVERT_API_KEY']}"
