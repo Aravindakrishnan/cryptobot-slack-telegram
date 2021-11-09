@@ -4,13 +4,21 @@ from utils.crypto import Crypto
 from dotenv import load_dotenv
 from pathlib import Path
 
-ENV_PATH= Path(".") / ".env"
-load_dotenv(dotenv_path=ENV_PATH)
+# Commented it for hosting in ec2 server 
+
+# TODO: uncomment it and create a .env in current directory.
+# Paste needed API_KEYS ref : README.md
+
+# ENV_PATH= Path(".") / ".env"
+# load_dotenv(dotenv_path=ENV_PATH)
 
 bot = telebot.TeleBot(os.environ["TELEGRAM_BOT_TOKEN"])
 
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
+    """
+        handle_start_help() - handles the /start and /help command
+    """
     text = """
 Here are the set of commands you can play 🕹️ with  :
 
@@ -28,11 +36,14 @@ doc : https://cryptobotdocs.netlify.app
     print(message)
     user = message.from_user
     full_name = f"{user.first_name} {user.last_name}"
-
     bot.reply_to(message, f"Hey {full_name} how you doing?\n {text}")
 
 @bot.message_handler(commands=['getprice'])
 def handle_getprice(message):
+    """
+        handle_getprice() method return the price of the particular coin 
+        eg : [Coinname] [Coinsymbol] : [Price]
+    """
     crypto = Crypto()
     item = message.text.split()
     coinname,*fiat_option = item[1:]
@@ -49,7 +60,9 @@ def handle_getprice(message):
 
 @bot.message_handler(commands=['showdetail'])
 def handle_showdetail(message):
-
+    """
+        handle_showdetail() method return the detail view of particular coin. 
+    """
     coin_name,*fiat_options = message.text.split()[1:]
     crypto = Crypto()
     coin = crypto.get_coin(coin_name)
@@ -78,6 +91,10 @@ def handle_showdetail(message):
 
 @bot.message_handler(commands=['showcandle'])
 def handle_showcandle(message):
+    """
+        handle_showcandle() return the snapshot of the coin graph at particular time_frame
+        [1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M]
+    """
     chat_id = message.chat.id
     crypto = Crypto()
     coin_name,*time_options = message.text.split()[1:]
@@ -92,5 +109,6 @@ def handle_showcandle(message):
         bot.send_photo(chat_id,response["data"]["url"])
     except:
         bot.reply_to(message,"Oops..😕 Something went wrong!")
-    
-bot.infinity_polling()
+     
+print("listening...") #for debug
+bot.polling()
