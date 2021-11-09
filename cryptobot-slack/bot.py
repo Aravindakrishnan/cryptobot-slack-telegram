@@ -7,13 +7,20 @@ import slack
 from slackeventsapi import SlackEventAdapter
 from utils.crypto import Crypto
 import json
+
 # intialization
+
+# Commented ENV_PATH for hosting in heroku server 
+
+# TODO: uncomment it and create a .env in current directory.
+# Paste needed API_KEYS ref : README.md
+
 # ENV_PATH= Path(".") / ".env"
 # load_dotenv(dotenv_path=ENV_PATH)
 
 app = Flask(__name__)
 
-PORT = 5001
+PORT = 5001 
 
 slack_event_adapter = SlackEventAdapter(os.environ["SIGNING_SECRET_TOKEN"],'/events',app)
 bot = slack.WebClient(token=os.environ["BOT_TOKEN"])
@@ -21,6 +28,7 @@ BOT_ID = bot.api_call("auth.test")["user_id"]
 
 @app.route("/")
 def index():
+    # base route
     return "Hey There! I'm Cryptobot"
 
 @app.route("/getprice",methods=["POST"])
