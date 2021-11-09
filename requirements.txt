@@ -6,3 +6,4 @@ mplfinance==0.12.7a17
 pandas==1.3.4
 slackeventsapi==3.0.0
 gunicorn==20.1.0
+pyTelegramBotAPI==4.2.0
