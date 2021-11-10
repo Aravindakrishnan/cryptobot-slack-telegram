@@ -54,3 +54,37 @@ const template = commands.map(command=> {
 })
 
 document.querySelector(".usage-container").innerHTML = template.join("");
+
+// isActive
+
+function isActive(status){
+    const template = `<span class="server_status">status : ${ status ? "active" : "inactive" }</span>`
+    return {isactive : status , template}
+}
+
+function renderSlackStatus(status){
+    const slack_element = document.querySelector(".slack__status")
+    slack_element.innerHTML = status.template
+    if(status.isactive){
+        slack_element.classList.add("active")
+        return
+    }
+    slack_element.classList.add("inactive")
+}
+
+function renderTelegramStatus(status){
+    const telegram_element = document.querySelector(".telegram__status");
+    telegram_element.innerHTML = status.template
+    if(status.isactive){
+        telegram_element.classList.add("active")
+        return
+    }
+    telegram_element.classList.add("inactive")
+}
+
+const isActiveTelegram = isActive(true)
+const isActiveSlack = isActive(true)
+
+renderSlackStatus(isActiveSlack)
+renderTelegramStatus(isActiveTelegram)
+
