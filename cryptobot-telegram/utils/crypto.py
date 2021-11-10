@@ -25,6 +25,8 @@ class Crypto:
         """
             get_coin() method returns complete JSON of top 100 cryptocurrencies.
         """
+        if(not self.coins):
+            return {}
         return self.coins
 
     def get_coin(self,coin_name):
@@ -42,7 +44,12 @@ class Crypto:
         """
         query = f"USD_{fiat_name.upper()}"
         url = f"https://free.currconv.com/api/v7/convert?q={query}&compact=ultra&apiKey={os.environ['CONVERT_API_KEY']}"
-        fiat_price = requests.get(url).json()[query]
+        response = requests.get(url).json()
+        
+        if(not response):
+            raise Exception("Invalid fiat symbol!")
+
+        fiat_price = response[query]       
         return float(usd_price) * fiat_price
 
     def get_candles(self,coinname,chart_interval):
@@ -50,12 +57,9 @@ class Crypto:
             get_candles() method saves the specified coin's candlechart in the app directory 
             and host it in imgbb server and returns the JSON of that hosted image.
         """
-        try:
-            symbol = coinname.upper()
-            candle.save_chart(symbol=symbol,interval=chart_interval)
-            return self.host_snapshot("chart.png")
-        except Exception as e:
-            return e
+        symbol = coinname.upper()
+        candle.save_chart(symbol=symbol,interval=chart_interval)
+        return self.host_snapshot("chart.png")
     
     def host_snapshot(self,path):
         """
