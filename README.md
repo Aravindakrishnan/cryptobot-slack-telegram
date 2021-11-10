@@ -98,9 +98,3 @@ ngrok http [PORT]
 /showdetail
 
 ![showdetail.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showdetail.png)
-
-/showcandle 
-
-![showdetail01.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showgraph01.png)
-
-![showdetail02.png](https://github.com/Aravindakrishnan/cryptobot-slack-telegram/blob/main/doc/images/showgraph02.png)
