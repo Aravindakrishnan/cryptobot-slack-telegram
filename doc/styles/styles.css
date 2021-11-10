@@ -57,6 +57,13 @@ p {
     font-size: 1.563rem;
 }
 
+/* navbar */
+.navbar {
+    padding: 1.2rem;
+    color: var(--headline-color);
+    background: var(--background);
+}
+
 /* notfication component */
 
 .notification-container {
@@ -228,6 +235,16 @@ p {
     margin: 1.2rem 0;
 }
 
+/* footer */
+.footer {
+    padding: 1.2rem;
+    text-align: center;
+}
+.footer__logo{
+    font-size: 2.8rem;
+    color: var(--subtitle-color);
+}
+
 /* ion-icon */
 
 ion-icon {
@@ -242,6 +259,9 @@ ion-icon {
 /* responsive */
 
 @media screen and (max-width:600px) {
+    .navbar {
+        text-align: center;
+    }
     .usage-container {
         grid-template-columns: 1fr;
     }
