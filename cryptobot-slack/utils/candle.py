@@ -12,7 +12,7 @@ def save_chart(symbol,interval="1d"):
     if(interval not in "1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M"):
         raise Exception("Invalid interval !")
 
-    url = f"https://api.binance.com/api/v1/klines?symbol={symbol}USDT&interval={interval}"
+    url = f"https://api.binance.com/api/v1/klines?symbol={symbol}USDT&interval={interval}&limit=30"
     candles = requests.get(url).json()
 
     time_c = []
