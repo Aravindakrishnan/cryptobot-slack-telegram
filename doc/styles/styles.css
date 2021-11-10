@@ -14,6 +14,8 @@
     --subtitle-color : #94a1b2;
     --paragraph-color : #94a1b2;
     --special-color : #7f5af0;
+    --danger-color :#fa5246;
+    --success-color : #2cb67d;
 }
 
 html 
@@ -114,6 +116,20 @@ p {
     border-radius: 0.6rem;
     border-bottom: 0.2rem solid var(--subtitle-color);
     transition: 0.1s;
+    position: relative;
+}
+
+.join__status {
+    color: var(--heading-color);
+    padding: 0.8rem;
+    border-radius: 0.6rem;
+}
+
+.telegram__status.active , .slack__status.active{
+    background: var(--success-color);
+}
+.telegram__status.inactive , .slack__status.inactive{
+    background: var(--danger-color);
 }
 
 .join__title {
@@ -246,5 +262,8 @@ ion-icon {
         margin: 1.2rem 0;
         width: 80%;
         text-align: center;
+    }
+    .join__status {
+        margin: 1.2rem 0;
     }
 }
