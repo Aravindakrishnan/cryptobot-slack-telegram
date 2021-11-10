@@ -74,15 +74,19 @@ ngrok http [PORT]
 ### Examples :
 
 ```
-/getprice btc inr
+/getprice bitcoin
+/getprice bitcoin inr
+/getprice btc
 ```
 
 ```
+/showdetail bitcoin
 /showdetail btc inr
 ```
 
 ```
-/showgraph btc 1y
+/showcandle bitcoin
+/showcandle btc 1y
 ```
 
 ### Sample Outputs
