@@ -33,7 +33,6 @@ Here are the set of commands you can play 🕹️ with  :
     
 doc : https://cryptobotdocs.netlify.app
     """    
-    print(message)
     user = message.from_user
     full_name = f"{user.first_name} {user.last_name}"
     bot.reply_to(message, f"Hey {full_name} how you doing?\n {text}")
@@ -48,14 +47,24 @@ def handle_getprice(message):
     item = message.text.split()
     coinname,*fiat_option = item[1:]
     coin = crypto.get_coin(coinname)
+    
+    if(not coin):
+        text = "Invalid coin name or symbol"
+        bot.reply_to(message, text)
+        return
 
     if(not fiat_option):
         price = coin['price_usd']  
         text = f"{coin['name']} [{coin['symbol']}] : {price} USD"      
     else:
-        price = crypto.convert_currency(coin['price_usd'],fiat_option[0])
-        text = f"{coin['name']} [{coin['symbol']}] : {price} {fiat_option[0].upper()}"
-    
+        try:
+            price = crypto.convert_currency(coin['price_usd'],fiat_option[0])
+            text = f"{coin['name']} [{coin['symbol']}] : {price} {fiat_option[0].upper()}"
+        except Exception as e:
+            print(e)
+            text = "Invalid fiat name/symbol!"
+            bot.reply_to(message,text=text)
+            return
     bot.reply_to(message, text)
 
 @bot.message_handler(commands=['showdetail'])
@@ -66,14 +75,26 @@ def handle_showdetail(message):
     coin_name,*fiat_options = message.text.split()[1:]
     crypto = Crypto()
     coin = crypto.get_coin(coin_name)
-    
+
+    if(not coin):
+        text = "Invalid coin name or symbol!"
+        bot.reply_to(message, text)
+        return
+
     get_indicator = lambda x : "📈" if(float(x) > 0) else "📉"
 
     if(not fiat_options):
         price = f"{coin['price_usd']} USD"
     else:
-        price = crypto.convert_currency(coin["price_usd"],fiat_options[0])
-        price = f"{price} {fiat_options[0].upper()}"
+        try:
+            price = crypto.convert_currency(coin["price_usd"],fiat_options[0])
+            price = f"{price} {fiat_options[0].upper()}"
+        except Exception as e:
+            print(e)
+            text = "Invalid fiat name/symbol!"
+            bot.reply_to(message,text=text)
+            return
+
     text = f"""----------------------------------------------------
                         {coin["name"]}
 ----------------------------------------------------
@@ -100,15 +121,25 @@ def handle_showcandle(message):
     coin_name,*time_options = message.text.split()[1:]
     coin = crypto.get_coin(coin_name)   
 
+    if(not coin):
+        text = "Invalid coin name or symbol!"
+        bot.reply_to(message, text)
+        return
+
     if(not time_options):
         time_options = ["1d"] #default
+    try:
+        response = crypto.get_candles(coin["symbol"],time_options[0])
+    except Exception as e:
+        bot.reply_to(message,"Invalid interval!")
+        return
 
-    response = crypto.get_candles(coin["symbol"],time_options[0])
     try:
         bot.reply_to(message,f"{coin['name']} {coin['symbol']} {time_options[0]} is here 😉💰")
         bot.send_photo(chat_id,response["data"]["url"])
     except:
         bot.reply_to(message,"Oops..😕 Something went wrong!")
-     
+        return
+        
 print("listening...") #for debug
 bot.polling()
