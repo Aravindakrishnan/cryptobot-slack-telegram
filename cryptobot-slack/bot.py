@@ -43,11 +43,24 @@ def get_price():
     coin_name,*fiat_options = data.get("text").split()
     coin = crypto.get_coin(coin_name)
 
+    if(not coin):
+        text = "Invalid coin name or symbol"
+        bot.chat_postMessage(channel=channel_id,text=text)
+        return Response(), 400
+
     if(not fiat_options):
         text = f"{coin['name']} : {coin['price_usd']} $"
     else:
-        price = crypto.convert_currency(coin['price_usd'],fiat_options[0])
-        text = f"{coin['name']} : {price}"
+        # handled for invalid fiat name/symbol
+        try:
+            price = crypto.convert_currency(coin['price_usd'],fiat_options[0])
+            text = f"{coin['name']} : {price}"
+        except Exception as e:
+            print(e)
+            text = "Invalid fiat name/symbol!"
+            bot.chat_postMessage(channel=channel_id,text=text)
+            return Response(), 400
+
     bot.chat_postMessage(channel=channel_id,text=text)
     return Response(), 200
 
@@ -61,11 +74,22 @@ def show_detail():
     coin_name,*fiat_options = data.get("text").split()
     crypto = Crypto()
     coin = crypto.get_coin(coin_name)
-    
+
+    if(not coin):
+        text = "Invalid coin name or symbol"
+        bot.chat_postMessage(channel=channel_id,text=text)
+        return Response(), 400
+
     if(not fiat_options):
         price = f"{coin['price_usd']} USD"
     else:
-        price = f"{crypto.convert_currency(coin['price_usd'],fiat_options[0])} {fiat_options[0].upper()}"
+        try:
+            price = f"{crypto.convert_currency(coin['price_usd'],fiat_options[0])} {fiat_options[0].upper()}"
+        except Exception as e:
+            print(e)
+            text = "Invalid fiat name/symbol!"
+            bot.chat_postMessage(channel=channel_id,text=text)
+            return Response(), 400
 
     text = f"""----------------------------------------------------
                         {coin["name"]}
@@ -95,10 +119,20 @@ def show_candle():
     coin_name,*time_options = data.get("text").split()
     coin = crypto.get_coin(coin_name)   
 
+    if(not coin):
+        text = "Invalid coin name or symbol"
+        bot.chat_postMessage(channel=channel_id,text=text)
+        return Response(), 400
+
     if(not time_options):
         time_options = ["1d"] #default
 
-    response = crypto.get_candles(coin["symbol"],time_options[0])
+    try:
+        response = crypto.get_candles(coin["symbol"],time_options[0])
+    except Exception as e:
+        bot.chat_postMessage(channel=channel_id,text="Invalid interval!")    
+        return Response(), 400
+
     bot.chat_postMessage(channel=channel_id,text="",attachments=[{"text":f"{coin['name']} {time_options[0]} graph 📈","image_url" : response["data"]["url"]}])
     return Response(), 200
 
