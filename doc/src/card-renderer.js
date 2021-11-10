@@ -82,7 +82,7 @@ function renderTelegramStatus(status){
     telegram_element.classList.add("inactive")
 }
 
-const isActiveTelegram = isActive(false)
+const isActiveTelegram = isActive(true)
 const isActiveSlack = isActive(true)
 
 renderSlackStatus(isActiveSlack)
