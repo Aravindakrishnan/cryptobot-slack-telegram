@@ -68,8 +68,8 @@ ngrok http [PORT]
 - /showdetail [coin_name or coin_symbol] - returns the complete detail about the selected cryptocurrency.
 - /showdetail [coin_name or coin_symbol] - returns the complete detail about the current cryptocurrency with specific fiat price.
 
-- /showgraph [coin_name or coin_symbol] - returns the candle graph snapshot of the particular coin.
-- /showgraph [coin_name or coin_symbol] [1d,7d,1m,3m,1y,ytd,all] - return the candle graph snapshot of the particular coin like 1day candle_graph , 7days candle_graph etc.,
+- /showcandle [coin_name or coin_symbol] - returns the candle graph snapshot of the particular coin.
+- /showcandle [coin_name or coin_symbol] [1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M] - return the candle graph snapshot of the particular coin like 1day candle_graph , 7days candle_graph etc.,
 
 ### Examples :
 
