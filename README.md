@@ -1,7 +1,7 @@
 # cryptobot-slack-telegram
 
-Cryptobot is here to help you with getting info about the cryptocurrencies 💰
-[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
+Cryptobot is here to help you with getting info about the cryptocurrencies 💰 <br>
+[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) </br>
 
 [documentation](https://cryptobotdocs.netlify.app/)
 
